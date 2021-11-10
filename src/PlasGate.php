@@ -84,7 +84,7 @@ class PlasGate
             return $response;
         } catch (ConnectException $e) {
 
-            return null;
+            return $e->getMessage();
         }
     }
 
