@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Kunlyly\PlasGate\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class PlasGateCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'lyly-cg-otp';
 
     public $description = 'My command';
 
