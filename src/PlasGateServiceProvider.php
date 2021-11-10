@@ -2,9 +2,9 @@
 
 namespace Kunlyly\PlasGate;
 
+use Kunlyly\PlasGate\Commands\PlasGateCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Kunlyly\PlasGate\Commands\PlasGateCommand;
 
 class PlasGateServiceProvider extends PackageServiceProvider
 {

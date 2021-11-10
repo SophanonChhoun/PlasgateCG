@@ -2,9 +2,9 @@
 
 namespace Kunlyly\PlasGate;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\RequestOptions;
-use GuzzleHttp\Client;
 
 class PlasGate
 {
@@ -16,10 +16,11 @@ class PlasGate
     {
         $this->params['text'] = $text;
 
-        if(is_string($phone_number))
+        if (is_string($phone_number)) {
             $this->params['number'] = $phone_number;
-        else if(is_array($phone_number))
+        } elseif (is_array($phone_number)) {
             $this->params['number'] = implode(',', $phone_number);
+        }
 
         return $this->request(true);
     }
@@ -29,34 +30,36 @@ class PlasGate
         try {
             $request = new Client([
                 'headers' => [
-                    'Accept' => 'application/json'
+                    'Accept' => 'application/json',
                 ],
                 'http_errors' => false,
-                'verify' => false
+                'verify' => false,
             ]);
 
             $response = $request->post(config('plasgate.url') . 'authorize', [
                 RequestOptions::JSON => [
                     'username' => config('plasgate.username'),
                     'password' => config('plasgate.password'),
-                ]
+                ],
             ]);
 
             $response = json_decode($response->getBody(), $is_array);
 
-            if(!isset($response['status']))
+            if (! isset($response['status'])) {
                 return false;
+            }
 
             $response = $request->post(config('plasgate.url') . 'accesstoken', [
                 RequestOptions::JSON => [
                     'authorization_code' => $response['data']['authorization_code'],
-                ]
+                ],
             ]);
 
             $response = json_decode($response->getBody(), $is_array);
 
-            if(!isset($response['status']))
+            if (! isset($response['status'])) {
                 return false;
+            }
 
             $response = $request->post(config('plasgate.url') . 'send', [
                 RequestOptions::JSON => [
@@ -64,18 +67,19 @@ class PlasGate
                         'number' => $this->params['number'],
                         'senderID' => config('plasgate.sender_id'),
                         'type' => 'sms',
-                        'text' => $this->params['text']
-                    ]
+                        'text' => $this->params['text'],
+                    ],
                 ],
                 'headers' => [
-                    'X-Access-Token' => $response['data']['access_token']
-                ]
+                    'X-Access-Token' => $response['data']['access_token'],
+                ],
             ]);
 
             $response = json_decode($response->getBody(), $is_array);
 
-            if(!isset($response['status']))
+            if (! isset($response['status'])) {
                 return false;
+            }
 
             return $response;
         } catch (ConnectException $e) {
