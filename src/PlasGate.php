@@ -98,7 +98,7 @@ class PlasGate
            'username' => config('lyly-cg-otp.username'),
            'password' => config('lyly-cg-otp.password'),
            'senderId' => config('lyly-cg-otp.sender_id'),
-           'test' => config('test'),
+           'test' => config('lyly-cg-otp.test'),
         ]);
     }
 }
