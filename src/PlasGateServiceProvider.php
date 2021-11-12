@@ -28,8 +28,5 @@ class PlasGateServiceProvider extends PackageServiceProvider
             ->hasMigration('create_lyly-cg-otp_table')
 
             ->hasCommand(PlasGateCommand::class);
-
-
     }
-
 }
