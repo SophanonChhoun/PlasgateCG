@@ -2,24 +2,31 @@
 
 namespace Kunlyly\PlasGate;
 
-use Kunlyly\PlasGate\Commands\PlasGateCommand;
+use Illuminate\Support\ServiceProvider;
 use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class PlasGateServiceProvider extends PackageServiceProvider
+class PlasGateServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
+    public function boot()
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package
-            ->name('lyly-cg-otp')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_lyly-cg-otp_table')
-            ->hasCommand(PlasGateCommand::class);
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/config.php' => config_path('plasgate.php'),
+            ], 'config');
+        }
+    }
+
+    /**
+     * Register the application services.
+     */
+    public function register()
+    {
+        // Automatically apply the package configuration
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'plasgate');
+
+        // Register the main class to use with the facade
+        $this->app->singleton('plasgate', function () {
+            return new Plasgate();
+        });
     }
 }
