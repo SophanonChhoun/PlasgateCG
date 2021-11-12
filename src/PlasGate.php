@@ -98,6 +98,7 @@ class PlasGate
            'username' => config('username'),
            'password' => config('password'),
            'senderId' => config('sender_id'),
+           'test'     => config('test')
         ]);
     }
 }
