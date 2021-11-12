@@ -36,10 +36,10 @@ class PlasGate
                 'verify' => false,
             ]);
 
-            $response = $request->post(config('plasgate.url') . 'authorize', [
+            $response = $request->post(config('url') . 'authorize', [
                 RequestOptions::JSON => [
-                    'username' => config('plasgate.username'),
-                    'password' => config('plasgate.password'),
+                    'username' => config('username'),
+                    'password' => config('password'),
                 ],
             ]);
 
@@ -49,7 +49,7 @@ class PlasGate
                 return false;
             }
 
-            $response = $request->post(config('plasgate.url') . 'accesstoken', [
+            $response = $request->post(config('url') . 'accesstoken', [
                 RequestOptions::JSON => [
                     'authorization_code' => $response['data']['authorization_code'],
                 ],
@@ -61,11 +61,11 @@ class PlasGate
                 return false;
             }
 
-            $response = $request->post(config('plasgate.url') . 'send', [
+            $response = $request->post(config('url') . 'send', [
                 RequestOptions::JSON => [
                     [
                         'number' => $this->params['number'],
-                        'senderID' => config('plasgate.sender_id'),
+                        'senderID' => config('sender_id'),
                         'type' => 'sms',
                         'text' => $this->params['text'],
                     ],
@@ -90,5 +90,14 @@ class PlasGate
     public function randomOtpNumber($digit = 4)
     {
         return rand(pow(10, $digit - 1), pow(10, $digit) - 1);
+    }
+
+    public function getEnv()
+    {
+        return response()->json([
+           'username' => config('username'),
+           'password' => config('password'),
+           'senderId' => config('sender_id'),
+        ]);
     }
 }
