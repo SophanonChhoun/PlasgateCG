@@ -18,7 +18,6 @@ class PlasGateServiceProvider extends PackageServiceProvider
          */
 
         $package
-
             ->name('lyly-cg-otp')
             ->hasConfigFile()
             ->hasViews()

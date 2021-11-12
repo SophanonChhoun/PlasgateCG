@@ -95,9 +95,9 @@ class PlasGate
     public function getEnv()
     {
         return response()->json([
-           'username' => config('username'),
-           'password' => config('password'),
-           'senderId' => config('sender_id'),
+           'username' => config('lyly-cg-otp.username'),
+           'password' => config('lyly-cg-otp.password'),
+           'senderId' => config('lyly-cg-otp.sender_id'),
            'test' => config('test'),
         ]);
     }
