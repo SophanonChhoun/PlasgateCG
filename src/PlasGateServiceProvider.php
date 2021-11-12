@@ -3,9 +3,7 @@
 namespace Kunlyly\PlasGate;
 
 use Illuminate\Support\ServiceProvider;
-use Kunlyly\PlasGate\Commands\PlasGateCommand;
 use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class PlasGateServiceProvider extends ServiceProvider
 {
@@ -28,7 +26,7 @@ class PlasGateServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('plasgate', function () {
-            return new Plasgate;
+            return new Plasgate();
         });
     }
 }
