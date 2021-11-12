@@ -36,10 +36,10 @@ class PlasGate
                 'verify' => false,
             ]);
 
-            $response = $request->post(config('url') . 'authorize', [
+            $response = $request->post(config('lyly-cg-otp.url') . 'authorize', [
                 RequestOptions::JSON => [
-                    'username' => config('username'),
-                    'password' => config('password'),
+                    'username' => config('lyly-cg-otp.username'),
+                    'password' => config('lyly-cg-otp.password'),
                 ],
             ]);
 
@@ -49,7 +49,7 @@ class PlasGate
                 return false;
             }
 
-            $response = $request->post(config('url') . 'accesstoken', [
+            $response = $request->post(config('lyly-cg-otp.url') . 'accesstoken', [
                 RequestOptions::JSON => [
                     'authorization_code' => $response['data']['authorization_code'],
                 ],
@@ -61,11 +61,11 @@ class PlasGate
                 return false;
             }
 
-            $response = $request->post(config('url') . 'send', [
+            $response = $request->post(config('lyly-cg-otp.url') . 'send', [
                 RequestOptions::JSON => [
                     [
                         'number' => $this->params['number'],
-                        'senderID' => config('sender_id'),
+                        'senderID' => config('lyly-cg-otp.sender_id'),
                         'type' => 'sms',
                         'text' => $this->params['text'],
                     ],
