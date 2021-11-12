@@ -20,6 +20,6 @@ class PlasGateServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasMigration('create_lyly-cg-otp_table')
             ->hasCommand(PlasGateCommand::class);
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'lyly-cg-otp');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'plasgate');
     }
 }
